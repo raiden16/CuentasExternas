@@ -26,7 +26,6 @@ Partial Class Form2
         Me.Banco = New System.Windows.Forms.ComboBox()
         Me.BancoText = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
-        Me.Socio = New System.Windows.Forms.Label()
         Me.Actualizar = New System.Windows.Forms.Button()
         Me.Calendario = New System.Windows.Forms.DateTimePicker()
         Me.Fecha = New System.Windows.Forms.Label()
@@ -74,23 +73,14 @@ Partial Class Form2
         Me.Label2.TabIndex = 11
         Me.Label2.Text = "Cuenta de Mayor"
         '
-        'Socio
-        '
-        Me.Socio.AutoSize = True
-        Me.Socio.Location = New System.Drawing.Point(139, 219)
-        Me.Socio.Name = "Socio"
-        Me.Socio.Size = New System.Drawing.Size(52, 13)
-        Me.Socio.TabIndex = 12
-        Me.Socio.Text = "               "
-        '
         'Actualizar
         '
         Me.Actualizar.BackColor = System.Drawing.Color.Khaki
         Me.Actualizar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Actualizar.Location = New System.Drawing.Point(139, 616)
+        Me.Actualizar.Location = New System.Drawing.Point(855, 616)
         Me.Actualizar.Name = "Actualizar"
         Me.Actualizar.Size = New System.Drawing.Size(123, 31)
-        Me.Actualizar.TabIndex = 6
+        Me.Actualizar.TabIndex = 5
         Me.Actualizar.Text = "Actualizar"
         Me.Actualizar.UseVisualStyleBackColor = False
         '
@@ -127,7 +117,7 @@ Partial Class Form2
         Me.DataGridView1.Location = New System.Drawing.Point(12, 134)
         Me.DataGridView1.Name = "DataGridView1"
         Me.DataGridView1.Size = New System.Drawing.Size(966, 476)
-        Me.DataGridView1.TabIndex = 2
+        Me.DataGridView1.TabIndex = 6
         '
         'Lista1
         '
@@ -135,7 +125,7 @@ Partial Class Form2
         Me.Lista1.Location = New System.Drawing.Point(155, 346)
         Me.Lista1.Name = "Lista1"
         Me.Lista1.Size = New System.Drawing.Size(120, 147)
-        Me.Lista1.TabIndex = 3
+        Me.Lista1.TabIndex = 7
         '
         'Form2
         '
@@ -149,7 +139,6 @@ Partial Class Form2
         Me.Controls.Add(Me.Fecha)
         Me.Controls.Add(Me.Calendario)
         Me.Controls.Add(Me.Actualizar)
-        Me.Controls.Add(Me.Socio)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.BancoText)
         Me.Controls.Add(Me.Banco)
@@ -179,7 +168,6 @@ Partial Class Form2
     Friend WithEvents Label4 As Label
     Friend WithEvents Label5 As Label
     Friend WithEvents Label6 As Label
-    Friend WithEvents Socio As Label
     Friend WithEvents Actualizar As Button
     Friend WithEvents Codigo As TextBox
     Friend WithEvents Calendario As DateTimePicker

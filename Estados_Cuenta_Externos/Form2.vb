@@ -7,9 +7,7 @@
     Private Sub Form2_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         SBOCompany = Form1.SBOCompany
-        'Actualizar.Enabled = False
         Lista1.Visible = False
-
 
         Dim oRecSettxb, oRecSettxb2 As SAPbobsCOM.Recordset
         Dim stQuerytxb, stQuerytxb2 As String
@@ -147,7 +145,7 @@
         Dim Ref, Memo, DebAmount, CredAmnt, DocNum, CardCode, CardName As String
 
         oRecSettx3 = SBOCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
-        stQuerytx3 = "Select * From (Select top 5 T0.""Sequence"",T0.""Ref"",T0.""Memo"",T0.""DebAmount"",T0.""CredAmnt"",T0.""DocNum"",T0.""CardCode"",T0.""CardName"" from ""OBNK"" T0 where T0.""AcctCode""='" & Banco & "' and T0.""DueDate""='" & Fecha & "' order by T0.""Sequence"" desc) T0 order by T0.""Sequence"""
+        stQuerytx3 = "Select * From (Select T0.""Sequence"",T0.""Ref"",T0.""Memo"",T0.""DebAmount"",T0.""CredAmnt"",T0.""DocNum"",T0.""CardCode"",T0.""CardName"" from ""OBNK"" T0 where T0.""AcctCode""='" & Banco & "' and T0.""DueDate""='" & Fecha & "' order by T0.""Sequence"" desc) T0 order by T0.""Sequence"""
         oRecSettx3.DoQuery(stQuerytx3)
 
         DataGridView1.Columns.Clear()
@@ -352,11 +350,7 @@
 
                             If DataGridView1.Item(0, cont).Value = "TPV" Then
 
-                                If (Banco.Text <> "110102006" Or Banco.Text <> "110102004") Then
-
-                                    MsgBox("La referencia ""TPV"" solo se puede usar con los bancos Banorte y Scotiabank")
-
-                                Else
+                                If (Banco.Text = "110102006" Or Banco.Text = "110102004") Then
 
                                     Deb = Val(DataGridView1.Item(2, cont).Value)
                                     Cred = Val(DataGridView1.Item(3, cont).Value)
@@ -384,6 +378,10 @@
                                     Cred = Nothing
                                     DocNum = Nothing
                                     CardCode = Nothing
+
+                                Else
+
+                                    MsgBox("La referencia ""TPV"" solo se puede usar con los bancos Banorte y Scotiabank")
 
 
                                 End If

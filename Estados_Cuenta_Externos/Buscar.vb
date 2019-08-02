@@ -96,7 +96,7 @@
         Dim LineTotal As Integer = 0
 
         oRecSettx3 = SBOCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
-        stQuerytx3 = "Select TO_DATE(T0.""DueDate"") as ""Fecha"",T0.""Ref"",T0.""Memo"",T0.""DebAmount"",T0.""CredAmnt"",T0.""DocNum"",T0.""CardCode"",T0.""CardName"" from ""OBNK"" T0 where ifnull(T0.""CardCode"",'') in('','DEVOLUCION') and T0.""DebAmount""=0 and T0.""AcctCode""='" & Banco2.Text & "' order by T0.""DueDate"""
+        stQuerytx3 = "Select * from (Select TO_DATE(T0.""DueDate"") as ""Fecha"",T0.""Ref"",T0.""Memo"",T0.""DebAmount"",T0.""CredAmnt"",T0.""DocNum"",T0.""CardCode"",T0.""CardName"" from ""OBNK"" T0 where ifnull(T0.""CardCode"",'') in('','DEVOLUCION') and T0.""DebAmount""=0 and T0.""AcctCode""='" & Banco2.Text & "' order by T0.""DueDate"") T0 where (T0.""Ref""not in('DCH_SBC_OK','DCH_SBC')) and (ifnull(T0.""CardCode"",'DEVOLUCION')='DEVOLUCION' or T0.""CardCode""='')"
         oRecSettx3.DoQuery(stQuerytx3)
 
         DataGridView1.ReadOnly = True
