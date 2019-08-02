@@ -350,9 +350,43 @@
 
                         If (Calendario.Value.Date >= Date.Today) Then
 
-                            If DataGridView1.Item(0, cont).Value = "TPV" And (Banco.Text <> "110102006" Or Banco.Text <> "110102004") Then
+                            If DataGridView1.Item(0, cont).Value = "TPV" Then
 
-                                MsgBox("La referencia ""TPV"" solo se puede usar con los bancos Banorte y Scotiabank")
+                                If (Banco.Text <> "110102006" Or Banco.Text <> "110102004") Then
+
+                                    MsgBox("La referencia ""TPV"" solo se puede usar con los bancos Banorte y Scotiabank")
+
+                                Else
+
+                                    Deb = Val(DataGridView1.Item(2, cont).Value)
+                                    Cred = Val(DataGridView1.Item(3, cont).Value)
+                                    DocNum = DataGridView1.Item(4, cont).Value
+                                    CardCode = DataGridView1.Item(5, cont).Value
+
+                                    oCuenta = SBOCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oBankPages)
+
+                                    oCuenta.AccountCode = Banco.Text
+                                    oCuenta.DueDate = Calendario.Value.Date.ToString
+                                    oCuenta.Reference = Ref
+                                    oCuenta.Memo = DataGridView1.Item(1, cont).Value
+                                    oCuenta.DebitAmount = Deb
+                                    oCuenta.CreditAmount = Cred
+                                    oCuenta.InvoiceNumberEx = DocNum
+                                    oCuenta.CardCode = CardCode
+                                    oCuenta.Add()
+
+
+                                    ActualizarStatus(CreatePayment(Ref, Cred, Deb, DocNum, CardCode), Deb, Cred)
+
+
+                                    Ref = Nothing
+                                    Deb = Nothing
+                                    Cred = Nothing
+                                    DocNum = Nothing
+                                    CardCode = Nothing
+
+
+                                End If
 
                             Else
 
@@ -482,15 +516,15 @@
 
             oPago = SBOCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oVendorPayments)
 
-            If Referencia.Text = "SS" Then
+            If Ref = "SS" Then
 
                 oPago.TransferAccount = "110102005"
 
-            ElseIf Referencia.Text = "COMISIONES" Then
+            ElseIf Ref = "COMISIONES" Then
 
                 oPago.TransferAccount = "611501001"
 
-            ElseIf Referencia.Text = "IVA" Then
+            ElseIf Ref = "IVA" Then
 
                 oPago.TransferAccount = "111002003"
 

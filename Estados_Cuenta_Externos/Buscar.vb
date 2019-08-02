@@ -203,7 +203,7 @@
         Next
 
         DataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill
-        DataGridView1.AutoResizeColumns()
+        DataGridView1.AutoResizeColumns() 'bncv
 
     End Sub
 

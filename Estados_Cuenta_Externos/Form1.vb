@@ -3,7 +3,6 @@ Imports SAPbobsCOM
 
 Public Class Form1
 
-    'Dim conexionSQL As New HanaConnection
     Public SBOCompany As SAPbobsCOM.Company
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
