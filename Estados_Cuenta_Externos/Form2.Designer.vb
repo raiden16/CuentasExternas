@@ -117,7 +117,7 @@ Partial Class Form2
         Me.DataGridView1.Location = New System.Drawing.Point(12, 134)
         Me.DataGridView1.Name = "DataGridView1"
         Me.DataGridView1.Size = New System.Drawing.Size(966, 476)
-        Me.DataGridView1.TabIndex = 6
+        Me.DataGridView1.TabIndex = 2
         '
         'Lista1
         '
@@ -125,7 +125,7 @@ Partial Class Form2
         Me.Lista1.Location = New System.Drawing.Point(155, 346)
         Me.Lista1.Name = "Lista1"
         Me.Lista1.Size = New System.Drawing.Size(120, 147)
-        Me.Lista1.TabIndex = 7
+        Me.Lista1.TabIndex = 3
         '
         'Form2
         '

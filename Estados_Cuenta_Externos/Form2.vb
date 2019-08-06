@@ -142,10 +142,10 @@
 
         Dim oRecSettx3 As SAPbobsCOM.Recordset
         Dim stQuerytx3 As String
-        Dim Ref, Memo, DebAmount, CredAmnt, DocNum, CardCode, CardName As String
+        Dim Ref, Memo, DebAmount, CredAmnt, Saldo, DocNum, CardCode, CardName As String
 
         oRecSettx3 = SBOCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
-        stQuerytx3 = "Select * From (Select T0.""Sequence"",T0.""Ref"",T0.""Memo"",T0.""DebAmount"",T0.""CredAmnt"",T0.""DocNum"",T0.""CardCode"",T0.""CardName"" from ""OBNK"" T0 where T0.""AcctCode""='" & Banco & "' and T0.""DueDate""='" & Fecha & "' order by T0.""Sequence"" desc) T0 order by T0.""Sequence"""
+        stQuerytx3 = "Select *, sum(T0.""Acumulado"") over(order by T0.""Sequence"") as ""Saldo"" From (Select 0 as ""Sequence"", '' as ""Ref"", 'Saldo Inicial' as ""Memo"", 0 as ""DebAmount"", 0 as ""CredAmnt"",sum(T0.""Debit""-T0.""Credit"") as ""Acumulado"", '' as ""DocNum"", '' as ""CardCode"", '' as ""CardName"" from ""JDT1"" T0 where T0.""Account""='" & Banco & "' and T0.""RefDate""<'" & Fecha & "' union all Select T0.""Sequence"",T0.""Ref"",T0.""Memo"",T0.""DebAmount"",T0.""CredAmnt"",(T0.""DebAmount""*-1)+T0.""CredAmnt"" as ""Acumulado"",T0.""DocNum"",T0.""CardCode"",T0.""CardName"" from ""OBNK"" T0 where T0.""AcctCode""='" & Banco & "' and T0.""DueDate""='" & Fecha & "' order by ""Sequence"" desc) T0 order by T0.""Sequence"""
         oRecSettx3.DoQuery(stQuerytx3)
 
         DataGridView1.Columns.Clear()
@@ -155,11 +155,13 @@
         DataGridView1.Columns.Add("Descripcion", "Info. detallada")
         DataGridView1.Columns.Add("Debito", "Importe débito")
         DataGridView1.Columns.Add("Credito", "Importe crédito")
+        DataGridView1.Columns.Add("Saldo", "Saldo Actual")
         DataGridView1.Columns.Add("Documento", "N° Documento")
         DataGridView1.Columns.Add("Codigo", "Código SN")
         DataGridView1.Columns.Add("Nombre", "Nombre SN")
         DataGridView1.Columns.Add("PreCargado", "PreCargado")
 
+        DataGridView1.Columns("Saldo").ReadOnly = True
         DataGridView1.Columns("Nombre").ReadOnly = True
         DataGridView1.Columns("PreCargado").ReadOnly = True
         DataGridView1.Columns("PreCargado").Visible = False
@@ -186,16 +188,19 @@
                     CredAmnt = oRecSettx3.Fields.Item("CredAmnt").Value
                     DataGridView1.Item(3, cont).Value = CredAmnt
                     DataGridView1.Item(3, cont).ReadOnly = True
-                    DocNum = oRecSettx3.Fields.Item("DocNum").Value
-                    DataGridView1.Item(4, cont).Value = DocNum
+                    Saldo = oRecSettx3.Fields.Item("Saldo").Value
+                    DataGridView1.Item(4, cont).Value = Saldo
                     DataGridView1.Item(4, cont).ReadOnly = True
-                    CardCode = oRecSettx3.Fields.Item("CardCode").Value
-                    DataGridView1.Item(5, cont).Value = CardCode
+                    DocNum = oRecSettx3.Fields.Item("DocNum").Value
+                    DataGridView1.Item(5, cont).Value = DocNum
                     DataGridView1.Item(5, cont).ReadOnly = True
-                    CardName = oRecSettx3.Fields.Item("CardName").Value
-                    DataGridView1.Item(6, cont).Value = CardName
+                    CardCode = oRecSettx3.Fields.Item("CardCode").Value
+                    DataGridView1.Item(6, cont).Value = CardCode
                     DataGridView1.Item(6, cont).ReadOnly = True
-                    DataGridView1.Item(7, cont).Value = "Yes"
+                    CardName = oRecSettx3.Fields.Item("CardName").Value
+                    DataGridView1.Item(7, cont).Value = CardName
+                    DataGridView1.Item(7, cont).ReadOnly = True
+                    DataGridView1.Item(8, cont).Value = "Yes"
 
                 Else
 
@@ -212,16 +217,19 @@
                     CredAmnt = oRecSettx3.Fields.Item("CredAmnt").Value
                     DataGridView1.Item(3, cont).Value = CredAmnt
                     DataGridView1.Item(3, cont).ReadOnly = True
-                    DocNum = oRecSettx3.Fields.Item("DocNum").Value
-                    DataGridView1.Item(4, cont).Value = DocNum
+                    Saldo = oRecSettx3.Fields.Item("Saldo").Value
+                    DataGridView1.Item(4, cont).Value = Saldo
                     DataGridView1.Item(4, cont).ReadOnly = True
-                    CardCode = oRecSettx3.Fields.Item("CardCode").Value
-                    DataGridView1.Item(5, cont).Value = CardCode
+                    DocNum = oRecSettx3.Fields.Item("DocNum").Value
+                    DataGridView1.Item(5, cont).Value = DocNum
                     DataGridView1.Item(5, cont).ReadOnly = True
-                    CardName = oRecSettx3.Fields.Item("CardName").Value
-                    DataGridView1.Item(6, cont).Value = CardName
+                    CardCode = oRecSettx3.Fields.Item("CardCode").Value
+                    DataGridView1.Item(6, cont).Value = CardCode
                     DataGridView1.Item(6, cont).ReadOnly = True
-                    DataGridView1.Item(7, cont).Value = "Yes"
+                    CardName = oRecSettx3.Fields.Item("CardName").Value
+                    DataGridView1.Item(7, cont).Value = CardName
+                    DataGridView1.Item(7, cont).ReadOnly = True
+                    DataGridView1.Item(8, cont).Value = "Yes"
 
                 End If
 
@@ -259,7 +267,7 @@
         Dim Grid As DataGridView = CType(sender, DataGridView)
         Dim Rec As Rectangle
 
-        If Columna = 0 And DataGridView1.Item(7, Fila).Value <> "Yes" Then
+        If Columna = 0 And DataGridView1.Item(8, Fila).Value <> "Yes" And Fila <> 0 Then
 
             DataGridView1.Enabled = False
             Banco.Enabled = False
@@ -310,7 +318,7 @@
         Dim oRecSettx As SAPbobsCOM.Recordset
         Dim stQuerytx, CardCode As String
 
-        If Columna = 5 And DataGridView1.Item(7, Fila).Value <> "Yes" Then
+        If Columna = 5 And DataGridView1.Item(8, Fila).Value <> "Yes" Then
 
             CardCode = DataGridView1.Item(Columna, Fila).Value
 
@@ -339,9 +347,9 @@
 
             For cont As Integer = 0 To TotalLine
 
-                If DataGridView1.Item(7, cont).Value <> "Yes" And DataGridView1.Item(0, cont).Value <> "" Then
+                If DataGridView1.Item(8, cont).Value <> "Yes" And DataGridView1.Item(0, cont).Value <> "" Then
 
-                    If (DataGridView1.Item(5, cont).Value = "" Or DataGridView1.Item(5, cont).Value = "DEVOLUCION") Then
+                    If (DataGridView1.Item(6, cont).Value = "" Or DataGridView1.Item(6, cont).Value = "DEVOLUCION") Then
 
                         Bancos = Banco.Text
                         Ref = DataGridView1.Item(0, cont).Value
@@ -354,8 +362,8 @@
 
                                     Deb = Val(DataGridView1.Item(2, cont).Value)
                                     Cred = Val(DataGridView1.Item(3, cont).Value)
-                                    DocNum = DataGridView1.Item(4, cont).Value
-                                    CardCode = DataGridView1.Item(5, cont).Value
+                                    DocNum = DataGridView1.Item(5, cont).Value
+                                    CardCode = DataGridView1.Item(6, cont).Value
 
                                     oCuenta = SBOCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oBankPages)
 
@@ -390,8 +398,8 @@
 
                                 Deb = Val(DataGridView1.Item(2, cont).Value)
                                 Cred = Val(DataGridView1.Item(3, cont).Value)
-                                DocNum = DataGridView1.Item(4, cont).Value
-                                CardCode = DataGridView1.Item(5, cont).Value
+                                DocNum = DataGridView1.Item(5, cont).Value
+                                CardCode = DataGridView1.Item(6, cont).Value
 
                                 oCuenta = SBOCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oBankPages)
 
@@ -423,8 +431,8 @@
 
                                 Deb = Val(DataGridView1.Item(2, cont).Value)
                                 Cred = Val(DataGridView1.Item(3, cont).Value)
-                                DocNum = DataGridView1.Item(4, cont).Value
-                                CardCode = DataGridView1.Item(5, cont).Value
+                                DocNum = DataGridView1.Item(5, cont).Value
+                                CardCode = DataGridView1.Item(6, cont).Value
 
                                 oCuenta = SBOCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.oBankPages)
 
@@ -616,9 +624,9 @@
 
         For cont As Integer = 0 To TotalLine
 
-            If DataGridView1.Item(7, cont).Value <> "Yes" And DataGridView1.Item(0, cont).Value <> "" Then
+            If DataGridView1.Item(8, cont).Value <> "Yes" And DataGridView1.Item(0, cont).Value <> "" Then
 
-                If (DataGridView1.Item(5, cont).Value = "" Or DataGridView1.Item(5, cont).Value = "DEVOLUCION") Then
+                If (DataGridView1.Item(6, cont).Value = "" Or DataGridView1.Item(6, cont).Value = "DEVOLUCION") Then
 
                     If DataGridView1.Item(0, cont).Value = "TPV" And (Banco.Text <> "110102006" Or Banco.Text <> "110102004") Then
 
@@ -629,9 +637,9 @@
                         Ref = DataGridView1.Item(0, cont).Value
                         Deb = Val(DataGridView1.Item(2, cont).Value)
                         Cred = Val(DataGridView1.Item(3, cont).Value)
-                        DocNum = DataGridView1.Item(4, cont).Value
-                        CardCode = DataGridView1.Item(5, cont).Value
-                        CardName = DataGridView1.Item(6, cont).Value
+                        DocNum = DataGridView1.Item(5, cont).Value
+                        CardCode = DataGridView1.Item(6, cont).Value
+                        CardName = DataGridView1.Item(7, cont).Value
 
                         If Buscar(Ref, Deb, Cred, DocNum, CardCode) <> Nothing Then
 
