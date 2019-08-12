@@ -43,7 +43,7 @@ Partial Class Form2
         Me.Agregar.Location = New System.Drawing.Point(12, 616)
         Me.Agregar.Name = "Agregar"
         Me.Agregar.Size = New System.Drawing.Size(121, 31)
-        Me.Agregar.TabIndex = 4
+        Me.Agregar.TabIndex = 5
         Me.Agregar.Text = "Agregar"
         Me.Agregar.UseVisualStyleBackColor = False
         '
@@ -70,17 +70,17 @@ Partial Class Form2
         Me.Label2.Location = New System.Drawing.Point(29, 42)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(88, 13)
-        Me.Label2.TabIndex = 11
+        Me.Label2.TabIndex = 7
         Me.Label2.Text = "Cuenta de Mayor"
         '
         'Actualizar
         '
         Me.Actualizar.BackColor = System.Drawing.Color.Khaki
         Me.Actualizar.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Actualizar.Location = New System.Drawing.Point(855, 616)
+        Me.Actualizar.Location = New System.Drawing.Point(1095, 616)
         Me.Actualizar.Name = "Actualizar"
         Me.Actualizar.Size = New System.Drawing.Size(123, 31)
-        Me.Actualizar.TabIndex = 5
+        Me.Actualizar.TabIndex = 6
         Me.Actualizar.Text = "Actualizar"
         Me.Actualizar.UseVisualStyleBackColor = False
         '
@@ -98,7 +98,7 @@ Partial Class Form2
         Me.Fecha.Location = New System.Drawing.Point(760, 42)
         Me.Fecha.Name = "Fecha"
         Me.Fecha.Size = New System.Drawing.Size(37, 13)
-        Me.Fecha.TabIndex = 13
+        Me.Fecha.TabIndex = 8
         Me.Fecha.Text = "Fecha"
         '
         'BancoImage
@@ -116,23 +116,24 @@ Partial Class Form2
         Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.DataGridView1.Location = New System.Drawing.Point(12, 134)
         Me.DataGridView1.Name = "DataGridView1"
-        Me.DataGridView1.Size = New System.Drawing.Size(966, 476)
+        Me.DataGridView1.Size = New System.Drawing.Size(1206, 476)
         Me.DataGridView1.TabIndex = 2
         '
         'Lista1
         '
         Me.Lista1.FormattingEnabled = True
-        Me.Lista1.Location = New System.Drawing.Point(155, 346)
+        Me.Lista1.Location = New System.Drawing.Point(142, 186)
         Me.Lista1.Name = "Lista1"
         Me.Lista1.Size = New System.Drawing.Size(120, 147)
-        Me.Lista1.TabIndex = 3
+        Me.Lista1.TabIndex = 4
+        Me.Lista1.TabStop = False
         '
         'Form2
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-        Me.ClientSize = New System.Drawing.Size(990, 659)
+        Me.ClientSize = New System.Drawing.Size(1230, 659)
         Me.Controls.Add(Me.Lista1)
         Me.Controls.Add(Me.DataGridView1)
         Me.Controls.Add(Me.BancoImage)

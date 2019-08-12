@@ -3,6 +3,9 @@
     Public SBOCompany As SAPbobsCOM.Company = Nothing
     Dim Sequence As Integer
     Dim Columna, Fila, TotalLine As Integer
+    Dim cell As DataGridViewCell
+    Dim columnIndex As Int32
+    Dim rowIndex As Int32
 
     Private Sub Form2_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
@@ -269,12 +272,31 @@
 
         If Columna = 0 And DataGridView1.Item(8, Fila).Value <> "Yes" And Fila <> 0 Then
 
-            DataGridView1.Enabled = False
             Banco.Enabled = False
             Calendario.Enabled = False
+            Agregar.Enabled = False
+            Actualizar.Enabled = False
             Rec = Grid.GetCellDisplayRectangle(Grid.CurrentCell.ColumnIndex, Grid.CurrentCell.RowIndex, False)
+            cell = DataGridView1.CurrentCell
+            columnIndex = cell.ColumnIndex
+            rowIndex = cell.RowIndex
             Lista1.Location = New Point(Rec.Location.X + Grid.Location.X + 80, Rec.Location.Y + Grid.Location.Y - 65)
             Lista1.Visible = True
+
+        End If
+
+    End Sub
+
+
+    Private Sub DataGridView1_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellClick
+
+        If Lista1.Visible = True Then
+
+            Lista1.Visible = False
+            Actualizar.Enabled = True
+            Agregar.Enabled = True
+            Banco.Enabled = True
+            Calendario.Enabled = True
 
         End If
 
@@ -287,6 +309,7 @@
 
         Dim oRecSettx As SAPbobsCOM.Recordset
         Dim stQuerytx As String
+
 
         DataGridView1.Item(Columna, Fila).Value = Lista1.SelectedItem
 
@@ -301,7 +324,8 @@
         End If
 
         Lista1.Visible = False
-        DataGridView1.Enabled = True
+        Actualizar.Enabled = True
+        Agregar.Enabled = True
         Banco.Enabled = True
         Calendario.Enabled = True
 
