@@ -156,7 +156,6 @@ Partial Class Form2
 
     End Sub
 
-    Friend WithEvents Referencia As ComboBox
     Friend WithEvents Debito As TextBox
     Friend WithEvents Credito As TextBox
     Friend WithEvents Documento As TextBox

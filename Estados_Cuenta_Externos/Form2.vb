@@ -277,9 +277,6 @@
             Agregar.Enabled = False
             Actualizar.Enabled = False
             Rec = Grid.GetCellDisplayRectangle(Grid.CurrentCell.ColumnIndex, Grid.CurrentCell.RowIndex, False)
-            cell = DataGridView1.CurrentCell
-            columnIndex = cell.ColumnIndex
-            rowIndex = cell.RowIndex
             Lista1.Location = New Point(Rec.Location.X + Grid.Location.X + 80, Rec.Location.Y + Grid.Location.Y - 65)
             Lista1.Visible = True
 
@@ -340,9 +337,9 @@
         Fila = e.RowIndex
 
         Dim oRecSettx As SAPbobsCOM.Recordset
-        Dim stQuerytx, CardCode As String
+        Dim stQuerytx, CardCode, Referencia As String
 
-        If Columna = 5 And DataGridView1.Item(8, Fila).Value <> "Yes" Then
+        If Columna = 6 And DataGridView1.Item(8, Fila).Value <> "Yes" Then
 
             CardCode = DataGridView1.Item(Columna, Fila).Value
 
@@ -351,6 +348,18 @@
             oRecSettx.DoQuery(stQuerytx)
 
             DataGridView1.Item(Columna + 1, Fila).Value = oRecSettx.Fields.Item("CardName").Value.ToString
+
+        End If
+
+        If Columna = 0 And DataGridView1.Item(8, Fila).Value <> "Yes" Then
+
+            Referencia = DataGridView1.Item(Columna, Fila).Value
+
+            oRecSettx = SBOCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
+            stQuerytx = "Select T0.""U_Descripcion"" from ""@REFBANCOS"" T0 where T0.""Name""='" & Referencia & "'"
+            oRecSettx.DoQuery(stQuerytx)
+
+            DataGridView1.Item(Columna + 1, Fila).Value = oRecSettx.Fields.Item("U_Descripcion").Value.ToString
 
         End If
 
