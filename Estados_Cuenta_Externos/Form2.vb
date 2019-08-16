@@ -89,11 +89,11 @@
         End If
 
 
-        If Banco.Text = "110102005" Or Banco.Text = "110102002" Or Banco.Text = "110102008" Or Banco.Text = "110102001" Then
+        If Banco.Text = "110102001" Then
 
             BancoImage.Image = My.Resources.HSBC
 
-        ElseIf Banco.text = "110102004" Then
+        ElseIf Banco.Text = "110102004" Then
 
             BancoImage.Image = My.Resources.Banorte
 
@@ -120,7 +120,48 @@
 
     Private Sub Banco_Leave(sender As Object, e As EventArgs) Handles Banco.Leave
 
+        SBOCompany = Form1.SBOCompany
+
         Dim Fecha As String
+        Dim oRecSettx2 As SAPbobsCOM.Recordset
+        Dim stQuerytx2 As String
+
+        oRecSettx2 = SBOCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
+        stQuerytx2 = "Select T0.""AcctName"" FROM OACT T0 WHERE ""AcctCode""='" & Banco.Text & "'"
+        oRecSettx2.DoQuery(stQuerytx2)
+
+        If oRecSettx2.RecordCount > 0 Then
+
+            BancoText.Text = oRecSettx2.Fields.Item("AcctName").Value
+
+        End If
+
+        If Banco.Text = "110102001" Then
+
+            BancoImage.Image = My.Resources.HSBC
+
+        ElseIf Banco.Text = "110102004" Then
+
+            BancoImage.Image = My.Resources.Banorte
+
+        ElseIf Banco.Text = "110102007" Then
+
+            BancoImage.Image = My.Resources.Santander
+
+        ElseIf Banco.Text = "110102010" Then
+
+            BancoImage.Image = My.Resources.Bancomer
+
+        ElseIf Banco.Text = "110102003" Then
+
+            BancoImage.Image = My.Resources.Banamex
+
+        ElseIf Banco.Text = "110102006" Then
+
+            BancoImage.Image = My.Resources.Scotiabank
+
+        End If
+
         Fecha = Calendario.Value.Date.Year & "-" & Calendario.Value.Date.Month & "-" & Calendario.Value.Date.Day
 
         LlenarGrid(Banco.Text, Fecha)
